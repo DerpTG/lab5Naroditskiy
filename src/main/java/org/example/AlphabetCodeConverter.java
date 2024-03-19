@@ -6,7 +6,7 @@ public class AlphabetCodeConverter {
     private String text;
 
     public AlphabetCodeConverter(String text) {
-        this.text = text.toUpperCase(); // Ensure text is uppercase for consistent mapping
+        this.text = text;
     }
 
     public String encrypt() {
@@ -26,6 +26,7 @@ public class AlphabetCodeConverter {
         codeMap.put('8', "???##%");codeMap.put('9', "%???#");codeMap.put('0', "?????%");
 
         StringBuilder encryptedTextBuilder = new StringBuilder();
+        text = text.toUpperCase();
         for (char c : text.toCharArray()) {
             if (c == ' ') {
                 encryptedTextBuilder.append(" ");
@@ -54,14 +55,18 @@ public class AlphabetCodeConverter {
         reverseCodeMap.put("???##%", '8');reverseCodeMap.put("%???#", '9');reverseCodeMap.put("?????%", '0');
 
         StringBuilder result = new StringBuilder();
-        String[] encodedSymbols = newAlphabetString.split(" ");
-        for (String symbol : encodedSymbols) {
-            if (symbol.equals(" ")) {
-                result.append(" ");
+        String[] words = newAlphabetString.split(" ");
+
+        for (String word : words) {
+            String[] letters = word.split(" ");
+            for (String letter : letters) {
+                if (reverseCodeMap.containsKey(letter)) {
+                    result.append(reverseCodeMap.get(letter));
+                }
             }
-            result.append(reverseCodeMap.get(symbol));
+            result.append(" ");
         }
 
-        return result.toString();
+        return result.toString().trim();
     }
 }
