@@ -1,18 +1,20 @@
 package org.example;
 
 public class BruteForce {
-    private String encryptedText;
+    private int max;
+    private int min;
 
-    public BruteForce(String encryptedText) {
-        this.encryptedText = encryptedText;
+    public BruteForce(int max, int min) {
+        this.max = max;
+        this.min = min;
     }
 
     // Method to perform brute force decryption
-    public void decrypt() {
-        for (int shift = 0; shift < 26; shift++) {
+    public void decrypt(String encryptedText) {
+        for (int shift = min; shift < max; shift++) {
             StringBuilder decryptedText = new StringBuilder();
 
-            for (char character : this.encryptedText.toCharArray()) {
+            for (char character : encryptedText.toCharArray()) {
                 if (character != ' ' && character != '!' && character != '.' && character != ',') {
                     int originalPosition = character >= 'a' && character <= 'z' ? character - 'a' : character - 'A';
                     int newPosition = (originalPosition - shift) % 26;

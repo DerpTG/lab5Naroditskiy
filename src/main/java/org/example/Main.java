@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.Scanner;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,17 +22,23 @@ public class Main {
 
             if (choice == 1) {
                 // Conversion
-                AlphabetCodeConverter alphabet = new AlphabetCodeConverter();
-                String newAlphabetString = alphabet.decrypt(englishString);
+                AlphabetCodeConverter alphabet = new AlphabetCodeConverter(englishString);
+                String newAlphabetString = alphabet.encrypt();
                 System.out.println("Converted to new alphabet: " + newAlphabetString);
 
-                String originalString = alphabetCodeConverter.encrypt(newAlphabetString);
+                String originalString = alphabet.decrypt(newAlphabetString);
                 System.out.println("Converted back to English: " + originalString);
             } else if (choice == 2) {
                 // SHA-256 Hash
-                SHAFinder shafinder = new SHAFinder();
-                String hashValue = shafinder.decypt(englishString);
-                System.out.println("SHA-256 hash of new alphabet string: " + hashValue);
+                try {
+                    System.out.println("What is your secret key?: ");
+                    String key = scanner.nextLine();
+                    SHAFinder shafinder = new SHAFinder(key);
+                    String hashValue = shafinder.decrypt(englishString);
+                    System.out.println("SHA-256 hash of new alphabet string: " + hashValue);
+                } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+                    e.printStackTrace();
+                }
             } else if (choice == 3) {
                 // Caesar Cipher encryption
                 System.out.println("Enter the shift value for the Caesar Cipher:");
@@ -54,8 +62,8 @@ public class Main {
                     System.out.println("Decrypted string: " + decryptedString);
                 } else if (nestedChoice == 2) {
                     System.out.println("Performing brute force decryption:");
-                    BruteForce bruteForce = new BruteForce(cipheredString);
-                    bruteForce.decrypt();
+                    BruteForce bruteForce = new BruteForce(26,0);
+                    bruteForce.decrypt(cipheredString);
                 } else if (nestedChoice == 3) {
                     continue;
                 } else {
