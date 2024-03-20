@@ -1,53 +1,53 @@
 package org.example;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CaeserCipherConverter {
     private int shift;
+    private List<String> symbolList = Arrays.asList(
+            "%#", "##?%", "%###?", "#?%%", "?%", "?##%", // A-F
+            "####%", "%???%", "??%", "?#%%%","##?#", "%?#?%", // G-L
+            "##%", "%#?", "###%", "?##?%", "##?#%", "%?#", // M-N
+            "%%%", "#%", "??#%", "%%%#", "%?#?", "#??#%", // O-T
+            "#?##%", "?##??%", "#?%%%", "##??%", "###%?", "####?", // U-Z
+            "#####%", "?####%", "%??###", "???##%", "%???#", "?????%", // 0-5
+            "?####%", "%??###", "???##%", "%???#", "?????%" // 6-9
+    );
 
     public CaeserCipherConverter(int shift) {
         this.shift = shift;
     }
 
-    // Encrypts plaintext with the initialized shift value
-    public String encrypt(String plaintext) {
+    public String encrypt(String encodedText) {
         StringBuilder encryptedText = new StringBuilder();
+        String[] encodedSymbols = encodedText.split(" ");
 
-        for (char character : plaintext.toCharArray()) {
-            if (Character.isLetter(character)) {
-                char base = Character.isLowerCase(character) ? 'a' : 'A';
-                int originalAlphabetPosition = character - base;
-                int newAlphabetPosition = (originalAlphabetPosition + this.shift) % 26;
-                if (newAlphabetPosition < 0) {
-                    newAlphabetPosition += 26;
-                }
-                char newCharacter = (char) (base + newAlphabetPosition);
-                encryptedText.append(newCharacter);
+        for (String symbol : encodedSymbols) {
+            int index = symbolList.indexOf(symbol);
+            if (index != -1) {
+                int newIndex = Math.floorMod(index + shift, symbolList.size());
+                encryptedText.append(symbolList.get(newIndex)).append(" ");
             } else {
-                encryptedText.append(character);
+                encryptedText.append(symbol).append(" ");
             }
         }
-
-        return encryptedText.toString();
+        return encryptedText.toString().trim();
     }
 
-    // Decrypts text with the initialized shift value
-    public String decrypt(String text) {
-        StringBuilder decryptedText = new StringBuilder();
+    public String decrypt(String encryptedText) {
+        StringBuilder result = new StringBuilder();
+        String[] encodedSymbols = encryptedText.split(" ");
 
-        for (char character : text.toCharArray()) {
-            if (Character.isLetter(character)) {
-                char base = Character.isLowerCase(character) ? 'a' : 'A';
-                int originalAlphabetPosition = character - base;
-                int newAlphabetPosition = (originalAlphabetPosition - this.shift) % 26;
-                if (newAlphabetPosition < 0) {
-                    newAlphabetPosition += 26;
-                }
-                char newCharacter = (char) (base + newAlphabetPosition);
-                decryptedText.append(newCharacter);
+        for (String symbol : encodedSymbols) {
+            int index = symbolList.indexOf(symbol);
+            if (index != -1) {
+                int newIndex = Math.floorMod(index - shift, symbolList.size());
+                result.append(symbolList.get(newIndex)).append(" ");
             } else {
-                decryptedText.append(character);
+                result.append(symbol).append(" ");
             }
         }
-
-        return decryptedText.toString();
+        return result.toString().trim();
     }
 }

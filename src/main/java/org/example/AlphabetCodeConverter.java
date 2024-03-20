@@ -63,8 +63,10 @@ public class AlphabetCodeConverter {
                 if (reverseCodeMap.containsKey(letter)) {
                     result.append(reverseCodeMap.get(letter));
                 }
+                else if (word.isEmpty()) {
+                    result.append(" ");
+                }
             }
-            result.append(" ");
         }
 
         return result.toString().trim();
