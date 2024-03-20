@@ -5,6 +5,7 @@ import java.util.List;
 
 public class CaeserCipherConverter {
     private int shift;
+
     private List<String> symbolList = Arrays.asList(
             "%#", "##?%", "%###?", "#?%%", "?%", "?##%", // A-F
             "####%", "%???%", "??%", "?#%%%","##?#", "%?#?%", // G-L

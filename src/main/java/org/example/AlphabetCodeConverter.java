@@ -11,7 +11,6 @@ public class AlphabetCodeConverter {
 
     public String encrypt() {
         HashMap<Character, String> codeMap = new HashMap<>();
-        // Encryption patterns with unique symbols
         codeMap.put('A', "%#");codeMap.put('B', "##?%");codeMap.put('C', "%###?");
         codeMap.put('D', "#?%%");codeMap.put('E', "?%");codeMap.put('F', "?##%");
         codeMap.put('G', "####%");codeMap.put('H', "%???%");codeMap.put('I', "??%");
@@ -40,7 +39,6 @@ public class AlphabetCodeConverter {
 
     public String decrypt(String newAlphabetString) {
         HashMap<String, Character> reverseCodeMap = new HashMap<>();
-        // Decryption patterns, reverse of encryption
         reverseCodeMap.put("%#", 'A');reverseCodeMap.put("##?%", 'B');reverseCodeMap.put("%###?", 'C');
         reverseCodeMap.put("#?%%", 'D');reverseCodeMap.put("?%", 'E');reverseCodeMap.put("?##%", 'F');
         reverseCodeMap.put("####%", 'G');reverseCodeMap.put("%???%", 'H');reverseCodeMap.put("??%", 'I');

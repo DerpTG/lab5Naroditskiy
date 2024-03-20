@@ -1,32 +1,43 @@
 package org.example;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class BruteForce {
     private int max;
     private int min;
 
-    public BruteForce(int max, int min) {
+    private List<String> symbolList = Arrays.asList(
+            "%#", "##?%", "%###?", "#?%%", "?%", "?##%", // A-F
+            "####%", "%???%", "??%", "?#%%%","##?#", "%?#?%", // G-L
+            "##%", "%#?", "###%", "?##?%", "##?#%", "%?#", // M-R
+            "%%%", "#%", "??#%", "%%%#", "%?#?", "#??#%", // S-X
+            "#?##%", "?##??%", "#?%%%", "##??%", "###%?", "####?", // Y-Z
+            "#####%", "?####%", "%??###", "???##%", "%???#", "?????%" // 0-9
+    );
+
+    public BruteForce(int min, int max) {
         this.max = max;
         this.min = min;
     }
 
-    // Method to perform brute force decryption
     public void decrypt(String encryptedText) {
-        for (int shift = min; shift < max; shift++) {
+        String[] encodedSymbols = encryptedText.split(" ");
+
+        for (int shift = min; shift <= max; shift++) {
             StringBuilder decryptedText = new StringBuilder();
 
-            for (char character : encryptedText.toCharArray()) {
-                if (character != ' ' && character != '!' && character != '.' && character != ',') {
-                    int originalPosition = character >= 'a' && character <= 'z' ? character - 'a' : character - 'A';
-                    int newPosition = (originalPosition - shift) % 26;
-                    newPosition = newPosition < 0 ? newPosition + 26 : newPosition;
-                    char newCharacter = (char) ((character >= 'a' && character <= 'z') ? 'a' + newPosition : 'A' + newPosition);
-                    decryptedText.append(newCharacter);
+            for (String symbol : encodedSymbols) {
+                int index = symbolList.indexOf(symbol);
+                if (index != -1) {
+                    int newIndex = (index - shift + symbolList.size()) % symbolList.size();
+                    decryptedText.append(symbolList.get(newIndex)).append(" ");
                 } else {
-                    decryptedText.append(character);
+                    decryptedText.append(symbol).append(" ");
                 }
             }
 
-            System.out.println(shift + ": " + decryptedText);
+            System.out.println("Shift " + shift + ": " + decryptedText.toString().trim());
         }
     }
 }

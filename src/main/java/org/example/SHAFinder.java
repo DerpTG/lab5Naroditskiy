@@ -7,7 +7,6 @@ import java.util.Base64;
 public class SHAFinder {
     private String algorithm;
 
-    // Constructor that takes the algorithm name as an argument
     public SHAFinder(String algorithm) {
         this.algorithm = algorithm;
     }

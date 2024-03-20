@@ -58,7 +58,7 @@ public class Main {
                     System.out.println("Decrypted string: " + decryptedString);
                 } else if (nestedChoice == 2) {
                     System.out.println("Performing brute force decryption:");
-                    BruteForce bruteForce = new BruteForce(26,0);
+                    BruteForce bruteForce = new BruteForce(0,26);
                     bruteForce.decrypt(cipheredString);
                 } else if (nestedChoice == 3) {
                     continue;
