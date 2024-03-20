@@ -11,13 +11,29 @@ package org.example;
 
 import java.util.HashMap;
 
+/**
+ * A class that performs encryption and decryption using a custom alphabet code.
+ */
 public class AlphabetCodeConverter {
+    /**
+     * The text to be encrypted or decrypted.
+     */
     private String text;
 
+    /**
+     * Constructs an AlphabetCodeConverter with the given text.
+     *
+     * @param text The text to be processed.
+     */
     public AlphabetCodeConverter(String text) {
         this.text = text;
     }
 
+    /**
+     * Encrypts the provided text based on a predefined symbol mapping.
+     *
+     * @return A string representing the encrypted text, where each character is replaced by symbols.
+     */
     public String encrypt() {
         HashMap<Character, String> codeMap = new HashMap<>();
         codeMap.put('A', "%#");codeMap.put('B', "##?%");codeMap.put('C', "%###?");
@@ -46,6 +62,12 @@ public class AlphabetCodeConverter {
         return encryptedTextBuilder.toString().trim();
     }
 
+    /**
+     * Decrypts the provided symbol-encoded text based on a predefined symbol-to-character mapping.
+     *
+     * @param newAlphabetString The symbol-encoded text to be decrypted.
+     * @return A string representing the decrypted text, where symbols are replaced by their corresponding characters.
+     */
     public String decrypt(String newAlphabetString) {
         HashMap<String, Character> reverseCodeMap = new HashMap<>();
         reverseCodeMap.put("%#", 'A');reverseCodeMap.put("##?%", 'B');reverseCodeMap.put("%###?", 'C');

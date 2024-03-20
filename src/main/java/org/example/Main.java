@@ -12,6 +12,10 @@ package org.example;
 import java.util.Scanner;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * The main class for demonstrating encryption and decryption functionalities including
+ * a custom alphabet code converter, SHA-256 hashing, and Caesar cipher operations.
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -19,15 +23,29 @@ public class Main {
         System.out.println("Enter an English string to encrypt and manipulate:");
         String englishString = scanner.nextLine();
 
+        /**
+         * Conversion using the alphabet mapping.
+         *
+         * @param newAlphabetString The plaintext encrypted into the new alphabet.
+         */
         AlphabetCodeConverter alphabet = new AlphabetCodeConverter(englishString);
         String newAlphabetString = alphabet.encrypt();
         System.out.println("Converted to new alphabet: " + newAlphabetString);
 
+        /**
+         * Conversion back to plaintext.
+         *
+         * @param originalString The new alphabet string converted back to plaintext.
+         */
         String originalString = alphabet.decrypt(newAlphabetString);
         System.out.println("Converted back to English: " + originalString);
 
         while (true) {
-            // Display menu
+            /**
+             * The display list for the user to decide which operation to perform.
+             *
+             * @param choice The user's choice.
+             */
             System.out.println("Please select an operation:");
             System.out.println("1 - Calculate SHA-256 hash of the new Alphabet String");
             System.out.println("2 - Perform Caesar Cipher operations on the new Alphabet String");
@@ -36,7 +54,11 @@ public class Main {
             scanner.nextLine();
 
             if (choice == 1) {
-                // SHA-256 Hash
+                /**
+                 * Calculates and displays the SHA-256 hash of the new alphabet string.
+                 *
+                 * @param hashValue The hash value of the encrypted string.
+                 */
                 try {
                     SHAFinder shafinder = new SHAFinder("SHA-256");
                     String hashValue = shafinder.encrypt(newAlphabetString);
@@ -45,7 +67,12 @@ public class Main {
                     e.printStackTrace();
                 }
             } else if (choice == 2) {
-                // Caesar Cipher encryption
+                /**
+                 * Encrypts the new alphabet string using Caesar Cipher with a user-specified shift value.
+                 *
+                 * @param cipheredString The encrypted alphabet string.
+                 * @param shiftValue The user entered shift value.
+                 */
                 System.out.println("Enter the shift value for the Caesar Cipher:");
                 int shiftValue = scanner.nextInt();
                 scanner.nextLine();
@@ -54,7 +81,11 @@ public class Main {
                 String cipheredString = caesarCipherConverter.encrypt(newAlphabetString);
                 System.out.println("Caesar Cipher (encrypted): " + cipheredString);
 
-                // Nested menu for post-encryption actions
+                /**
+                 * Nested user choice list.
+                 *
+                 * @param nestedChoice The user's choice when performing Caeser operations.
+                 */
                 System.out.println("Select next action for the encrypted string:");
                 System.out.println("1 - Decrypt using the known shift value");
                 System.out.println("2 - Perform Brute Force decryption");
@@ -75,6 +106,9 @@ public class Main {
                     System.out.println("Invalid choice. Returning to main menu.");
                 }
             } else if (choice == 3) {
+                /**
+                 * Exits the program.
+                 */
                 System.out.println("Exiting program.");
                 break;
             } else {
