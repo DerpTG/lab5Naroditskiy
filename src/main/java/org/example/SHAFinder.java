@@ -1,25 +1,20 @@
 package org.example;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 public class SHAFinder {
-    private String key;
+    private String algorithm;
 
-    public SHAFinder(String key) {
-        this.key = key;
+    // Constructor that takes the algorithm name as an argument
+    public SHAFinder(String algorithm) {
+        this.algorithm = algorithm;
     }
 
-    public String decrypt(String data)
-            throws NoSuchAlgorithmException, InvalidKeyException {
-        String algorithm = "HmacSHA256";
-        Mac mac = Mac.getInstance(algorithm);
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), algorithm);
-        mac.init(secretKeySpec);
-        byte[] hmacBytes = mac.doFinal(data.getBytes());
-        return Base64.getEncoder().encodeToString(hmacBytes);
+    public String encrypt(String data) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance(algorithm);
+        byte[] hashBytes = digest.digest(data.getBytes());
+        return Base64.getEncoder().encodeToString(hashBytes);
     }
 }

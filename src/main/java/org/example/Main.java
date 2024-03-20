@@ -1,7 +1,6 @@
 package org.example;
 
 import java.util.Scanner;
-import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 public class Main {
@@ -30,12 +29,10 @@ public class Main {
             if (choice == 1) {
                 // SHA-256 Hash
                 try {
-                    System.out.println("What is your secret key?: ");
-                    String key = scanner.nextLine();
-                    SHAFinder shafinder = new SHAFinder(key);
-                    String hashValue = shafinder.decrypt(newAlphabetString);
+                    SHAFinder shafinder = new SHAFinder("SHA-256");
+                    String hashValue = shafinder.encrypt(newAlphabetString);
                     System.out.println("SHA-256 hash of new alphabet string: " + hashValue);
-                } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+                } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
             } else if (choice == 2) {
